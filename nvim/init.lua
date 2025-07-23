@@ -10,8 +10,10 @@ if not vim.uv.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
+vim.opt.relativenumber = true
+vim.clipboard=unnamedplus
 local lazy_config = require "configs.lazy"
+
 
 -- load plugins
 require("lazy").setup({
@@ -24,8 +26,7 @@ require("lazy").setup({
 
   { import = "plugins" },
 }, lazy_config)
-
--- load theme
+  -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 

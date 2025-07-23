@@ -4,9 +4,10 @@
 #alias
 [ -f "$HOME/.config/zsh/alias.zsh" ] && source "$HOME/.config/zsh/alias.zsh"
 
-#
-#export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
-#eval "$(starship init zsh)"
+#Starship
+
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+eval "$(starship init zsh)"
 
 
 # History settings
