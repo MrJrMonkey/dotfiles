@@ -10,6 +10,10 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 
 
+# Set cursor to block
+echo -ne '\e[2 q'
+# Set cursor to line
+#echo -ne '\e[5 q'
 # History settings
 #HISTSIZE=10000              # Number of commands kept in memory
 #SAVEHIST=10000              # Number of commands saved to file
@@ -23,3 +27,7 @@ eval "$(starship init zsh)"
 # Optional: Avoid duplicates
 #setopt HIST_IGNORE_ALL_DUPS
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
