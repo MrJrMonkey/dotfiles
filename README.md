@@ -8,4 +8,4 @@ added **fzf** and **zoxide** for better navigation.
 
 -MrJrMonkey
 
-![](https://media.istockphoto.com/id/1207692239/vector/service-tools-icon-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=hfd-KQ8ABJtEueM0n7lLkPwTDOTnsN5RdkkAot2x3cQ=)
+![ester egg](https://cdn.discordapp.com/attachments/944963105765609512/1498475516049494097/spanner.png?ex=69f14b93&is=69effa13&hm=2842edd5c86695b18738177383efdb9415d04911a838a2e8cc94f190da9e022d&)
