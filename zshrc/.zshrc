@@ -74,6 +74,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias ls='ls --color'
 alias v='nvim'
 alias c='clear'
+alias ssh="kitty +kitten ssh"
 
 # Shell integrations
 eval "$(fzf --zsh)"
