@@ -1,58 +1,47 @@
+local servers = { "lua_ls", "pylsp", "clangd","asm"}
+
 return {
 	{
 		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
+		opts = {},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"neovim/nvim-lspconfig",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = servers,
 		},
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "pylsp" },
-			})
-		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"hrsh7th/cmp-nvim-lsp",
+		},
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		-- Shared capabilities for every server
+		vim.lsp.config("*", {
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		})
+		vim.lsp.enable(servers)
 
-			vim.lsp.config("lua_ls", { capabilities = capabilities })
-			vim.lsp.config("pylsp", { capabilities = capabilities })
+		vim.diagnostic.config({
+			virtual_text = { prefix = "█ ", spacing = 4 },
+			signs = true,
+			underline = true,
+		})
 
-			vim.lsp.enable("lua_ls")
-			vim.lsp.enable("pylsp")
+		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e222a" })
 
-			-- 1. Set background & text colors for virtual text diagnostic boxes
-			-- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { bg = "#3a232d", fg = "#f7768e", bold = true })
-			-- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn",  { bg = "#342d20", fg = "#e0af68", bold = true })
-			-- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo",  { bg = "#1f2d3a", fg = "#7aa2f7" })
-			-- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint",  { bg = "#1d3330", fg = "#7dcfff" })
+		local map = function(lhs, rhs, desc)
+		vim.keymap.set("n", lhs, rhs, { desc = "LSP: " .. desc })
+		end
 
-			-- 2. Diagnostic Virtual Text Settings
-			vim.diagnostic.config({
-				virtual_text = {
-					prefix = "█ ", -- Solid color block tag on the left edge
-					spacing = 4,
-				},
-				signs = true,
-				underline = true,
-			})
-
-			-- Change floating window background and border colors
-			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e222a" }) -- Darker background for the box
-			-- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#61afef", bg = "#1e222a" }) -- Blue border 
-			-- Keymaps
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "LSP: Show hover documentation" })
-			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
-			vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "LSP: Go to references" })
-			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code actions" })
+		map("K", vim.lsp.buf.hover, "Hover documentation")
+		map("<leader>gd", vim.lsp.buf.definition, "Go to definition")
+		map("<leader>gr", vim.lsp.buf.references, "Go to references")
+		map("<leader>ca", vim.lsp.buf.code_action, "Code actions")
 		end,
 	},
 }
